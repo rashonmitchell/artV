@@ -3,6 +3,7 @@ import axios from 'axios';
 import { setUserSession } from './Utils/Common';
 
 
+
 function Login(props) {
   const [loading, setLoading] = useState(false);
   const username = useFormInput('');
@@ -17,10 +18,11 @@ function Login(props) {
     setLoading(true);
     // 'http://localhost:3000/users/signin'
 
-    axios.post(API_BASE_URL, { username: username.value, password: password.value }).then(response => {
+    axios.post('https://art-v-login.onrender.com', { username: username.value, password: password.value }).then(response => {
       setLoading(false);
       setUserSession(response.data.token, response.data.user);
-      props.history.push('/dashboard');
+      props.history.push(API_BASE_URL);
+      // props.history.push('/dashboard');
     }).catch(error => {
       setLoading(false);
       if (error.response.status === 401) setError(error.response.data.message);
